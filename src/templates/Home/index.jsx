@@ -1,12 +1,12 @@
 //import logo from "./logo.svg";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from 'react';
 
-import "./style.css";
+import './style.css';
 
-import { loadPosts } from "../../utils/load-posts";
-import Posts from "../../components/Posts/index";
-import Button from "../../components/Button";
-import TextInput from "../../components/TextInput";
+import { loadPosts } from '../../utils/load-posts';
+import Posts from '../../components/Posts/index';
+import Button from '../../components/Button';
+import TextInput from '../../components/TextInput';
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -17,11 +17,11 @@ export const Home = () => {
 
   const noMorePosts = page + postsPerPage >= allPosts.length;
 
-  const filteredPosts = !!searchValue
-  ? allPosts.filter((post) => {
-      return post.title.toLowerCase().includes(searchValue.toLowerCase());
-    })
-  : posts;
+  const filteredPosts = searchValue
+    ? allPosts.filter((post) => {
+        return post.title.toLowerCase().includes(searchValue.toLowerCase());
+      })
+    : posts;
 
   const handleLoadPosts = useCallback(async (page, postsPerPage) => {
     const postsAndPhotos = await loadPosts();
@@ -32,7 +32,7 @@ export const Home = () => {
 
   useEffect(() => {
     handleLoadPosts(0, postsPerPage);
-  }, [handleLoadPosts, postsPerPage])
+  }, [handleLoadPosts, postsPerPage]);
 
   const loadMorePosts = () => {
     const nextPage = page + postsPerPage;
@@ -40,39 +40,28 @@ export const Home = () => {
     posts.push(...nextPosts);
 
     setPosts(posts);
-    setPage(nextPage)
+    setPage(nextPage);
   };
 
   const handleChange = (event) => {
     const { value } = event.target;
-    setSearchValue(value)
+    setSearchValue(value);
   };
 
   return (
     <section className="container">
       <div className="search-container">
         {!!searchValue && <h1>Search value: {searchValue}</h1>}
-        <TextInput
-          searchValue={searchValue}
-          handleChange={handleChange}
-        />
+        <TextInput searchValue={searchValue} handleChange={handleChange} />
       </div>
       {filteredPosts.length > 0 && <Posts posts={filteredPosts} />}
       {filteredPosts.length === 0 && <h1>Não existem posts! :(</h1>}
       <div className="button-container">
-        {!searchValue && (
-          <Button
-            text="Load more posts"
-            onClick={loadMorePosts}
-            disabled={noMorePosts}
-          />
-        )}
+        {!searchValue && <Button text="Load more posts" onClick={loadMorePosts} disabled={noMorePosts} />}
       </div>
     </section>
   );
-
-}
-
+};
 
 /* class Home2 extends Component {
   state = {
