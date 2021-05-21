@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import "./style.css";
 
 import { loadPosts } from "../../utils/load-posts";
-import { Posts } from "../../components/Posts";
+import Posts from "../../components/Posts/index";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 
